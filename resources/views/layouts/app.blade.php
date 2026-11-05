@@ -1,20 +1,33 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8">
-    <title>@yield('title','Gestor ADSO')</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body{max-width:980px;margin:24px auto;font-family:system-ui}
-        nav a{margin-right:12px}
-        .flash{background:#e6ffed;padding:8px;border-radius:8px;margin-bottom:10px}
-    </style>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Gestor ADSO</title>
+ @vite(['resources/css/app.css','resources/js/app.js'])
 </head>
 <body>
-    <nav>
-        <a href="/aprendices">Aprendices</a>
-    </nav>
-    @if(session('ok'))<div class="flash">{{ session('ok') }}</div>@endif
-    @yield('content')
+ <nav>
+ <a href="/aprendices">Aprendices</a>
+
+ @auth
+ <span>Hola, {{ auth()->user()->name }}</span>
+ <form method="POST" action="{{ route('logout') }}">
+ @csrf
+ <button type="submit">Salir</button>
+ </form>
+ @endauth
+
+ @guest
+ <a href="{{ route('login') }}">Iniciar sesión</a>
+ <a href="{{ route('register') }}">Registrarse</a>
+ @endguest
+ </nav>
+
+ @if(session('ok'))
+ <div>{{ session('ok') }}</div>
+ @endif
+
+ @yield('content')
 </body>
 </html>

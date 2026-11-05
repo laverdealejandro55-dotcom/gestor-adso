@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('title','Nuevo Aprendiz')
 @section('content')
+@include('aprendices._form', ['aprendiz' => $aprendiz])
 <h1>Nuevo Aprendiz</h1>
 <form action="{{ route('aprendices.store') }}" method="POST">
  @csrf
