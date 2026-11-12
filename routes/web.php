@@ -13,7 +13,10 @@ Route::get('/dashboard', function () {
 
 // Proteger el módulo de aprendices requiriendo autenticación
 Route::middleware(['auth'])->group(function () {
-    Route::resource('aprendices', AprendizController::class);
+    // ->parameters(): Laravel singulariza "aprendices" como "aprendice" (inglés),
+    // pero el controlador y el Form Request usan $aprendiz. Así el model binding funciona.
+    Route::resource('aprendices', AprendizController::class)
+        ->parameters(['aprendices' => 'aprendiz']);
 });
 
 require __DIR__.'/auth.php';
